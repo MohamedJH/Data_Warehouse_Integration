@@ -1,1 +1,50 @@
+/*
+==============================================================
+Création de la base de données et les Schemas
+===============================================================
+Ce script recherche une base de données nommée 'ooredoo_database_DW', si elle existe déjà avant de la créer. Une fois la base de données en place, il définit trois schémas - bronze, argent pour organiser les données.
 
+*/
+USE master;
+GO
+
+-- Vérifier si la base existe avant de la créer.
+IF NOT EXISTS (
+	SELECT 1 
+	FROM sys.databases 
+	WHERE name = 'ooredoo_database_DW')
+BEGIN
+	CREATE DATABASE ooredoo_database_DW;
+END;
+GO
+
+USE ooredoo_database_DW;
+GO
+
+-- Création des Schemas
+IF NOT EXISTS (
+	SELECT 1 
+	FROM ooredoo_database_DW.sys.schemas 
+	WHERE name = 'bronze')
+BEGIN
+	EXEC( 'CREATE SCHEMA bronze') 
+END;
+GO
+
+IF NOT EXISTS (
+	SELECT 1 
+	FROM ooredoo_database_DW.sys.schemas 
+	WHERE name = 'silver')
+BEGIN
+	EXEC( 'CREATE SCHEMA silver') 
+END;
+GO
+
+IF NOT EXISTS (
+	SELECT 1 
+	FROM ooredoo_database_DW.sys.schemas 
+	WHERE name = 'gold')
+BEGIN
+	EXEC( 'CREATE SCHEMA gold') 
+END;
+GO
